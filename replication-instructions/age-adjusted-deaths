@@ -1,0 +1,6 @@
+Instructions for creating age-adjusted death rates 
+Individual level cause of death data available from NCHS via application
+
+1. Follow data application instructions from https://www.cdc.gov/nchs/nvss/nvss-restricted-data.htm#anchor_1553801979 to receive restricted-use death files
+  a. Set up virtual machine or other secured device to receive data 
+2. 
