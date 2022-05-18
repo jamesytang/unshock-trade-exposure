@@ -2,15 +2,16 @@
 # Load and reformat death data 
 # ---------------------------------------------------------------------------------------------------------
 
+# R Libraries 
 library(dplyr)
 library(ggplot2)
 
-
+# State name/abbr <--> state fips cd conversion 
 state_fips_xwalk <- read.csv("C:/Users/tangjy/Documents/xwalks/state_fips_xwalk.csv")
 
-# Load raw mortality file
-# Convert to columns by applying substrings 
-# Function applies to data years 2005-2019
+# Load raw mortality file - Function applies to data years 2005-2019
+# Note: Raw .txt files are one string per death with information coded by string position 
+# Following code converts strings to separate columns using substrings
 load_mortality_file_05_19 <- function(year){
   file_path <- paste("C:/Users/tangjy/Documents/MCD_files/MULT", year, "US.AllCnty.txt", sep = '')
   file_name <- read.csv(file_path, header=FALSE)
@@ -158,70 +159,58 @@ load_mortality_file_05_19 <- function(year){
 
 
 # Run function to load and format complete mortality files
-load_mortality_file_05_19('2013')
-gc()
-load_mortality_file_05_19('2014')
-gc()
-load_mortality_file_05_19('2015')
-gc()
-load_mortality_file_05_19('2016')
-gc()
-load_mortality_file_05_19('2017')
-gc()
-load_mortality_file_05_19('2018')
-gc()
-load_mortality_file_05_19('2019')
-gc()
-
-
-
-
-
-write.csv(mort_2013, "C:/Users/tangjy/Documents/interim/mort_2013.csv", row.names = F)
-write.csv(mort_2014, "C:/Users/tangjy/Documents/interim/mort_2014.csv", row.names = F)
-write.csv(mort_2015, "C:/Users/tangjy/Documents/interim/mort_2015.csv", row.names = F)
-write.csv(mort_2016, "C:/Users/tangjy/Documents/interim/mort_2016.csv", row.names = F)
-write.csv(mort_2017, "C:/Users/tangjy/Documents/interim/mort_2017.csv", row.names = F)
-write.csv(mort_2018, "C:/Users/tangjy/Documents/interim/mort_2018.csv", row.names = F)
-write.csv(mort_2019, "C:/Users/tangjy/Documents/interim/mort_2019.csv", row.names = F)
-
-
-
-
-
-
+# Save as csv files to interim directory
+# Files are large so clear R environment between runs 
 load_mortality_file_05_19('2005')
+write.csv(mort_2005, "C:/Users/tangjy/Documents/interim/mort_2005.csv", row.names = F)
 gc()
 load_mortality_file_05_19('2006')
+write.csv(mort_2006, "C:/Users/tangjy/Documents/interim/mort_2006.csv", row.names = F)
 gc()
 load_mortality_file_05_19('2007')
+write.csv(mort_2007, "C:/Users/tangjy/Documents/interim/mort_2007.csv", row.names = F)
 gc()
 load_mortality_file_05_19('2008')
-gc()
-
-write.csv(mort_2005, "C:/Users/tangjy/Documents/interim/mort_2005.csv", row.names = F)
-write.csv(mort_2006, "C:/Users/tangjy/Documents/interim/mort_2006.csv", row.names = F)
-write.csv(mort_2007, "C:/Users/tangjy/Documents/interim/mort_2007.csv", row.names = F)
 write.csv(mort_2008, "C:/Users/tangjy/Documents/interim/mort_2008.csv", row.names = F)
-
+gc()
 load_mortality_file_05_19('2009')
 write.csv(mort_2009, "C:/Users/tangjy/Documents/interim/mort_2009.csv", row.names = F)
 gc()
 load_mortality_file_05_19('2010')
 write.csv(mort_2010, "C:/Users/tangjy/Documents/interim/mort_2010.csv", row.names = F)
 gc()
-
 load_mortality_file_05_19('2011')
 write.csv(mort_2011, "C:/Users/tangjy/Documents/interim/mort_2011.csv", row.names = F)
 gc()
 load_mortality_file_05_19('2012')
 write.csv(mort_2012, "C:/Users/tangjy/Documents/interim/mort_2012.csv", row.names = F)
 gc()
+load_mortality_file_05_19('2013')
+write.csv(mort_2013, "C:/Users/tangjy/Documents/interim/mort_2013.csv", row.names = F)
+gc()
+load_mortality_file_05_19('2014')
+write.csv(mort_2014, "C:/Users/tangjy/Documents/interim/mort_2014.csv", row.names = F)
+gc()
+load_mortality_file_05_19('2015')
+write.csv(mort_2015, "C:/Users/tangjy/Documents/interim/mort_2015.csv", row.names = F)
+gc()
+load_mortality_file_05_19('2016')
+write.csv(mort_2016, "C:/Users/tangjy/Documents/interim/mort_2016.csv", row.names = F)
+gc()
+load_mortality_file_05_19('2017')
+write.csv(mort_2017, "C:/Users/tangjy/Documents/interim/mort_2017.csv", row.names = F)
+gc()
+load_mortality_file_05_19('2018')
+write.csv(mort_2018, "C:/Users/tangjy/Documents/interim/mort_2018.csv", row.names = F)
+gc()
+load_mortality_file_05_19('2019')
+write.csv(mort_2019, "C:/Users/tangjy/Documents/interim/mort_2019.csv", row.names = F)
+gc()
+
 
 
 
 cleaned_mortality_file <- function(loaded_file, year){
-  
   cleaned_file <- loaded_file %>%
     select(current_data_year,
            death_month,
