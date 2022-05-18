@@ -9,13 +9,21 @@ library(ggplot2)
 # State name/abbr <--> state fips cd conversion 
 state_fips_xwalk <- read.csv("C:/Users/tangjy/Documents/xwalks/state_fips_xwalk.csv")
 
+
 # Functions are grouped by years based on data dictionary similarities 
 # - Note: Raw .txt files are one string per death with information coded by string position 
 # - Following code converts strings to separate columns using substrings
-# - Run each year separately since data is very large
 # - The following years are grouped together:
 #   - 1990-1992
-# 
+#   - 1993-1994
+#   - 1995
+#   - 1996-1998
+#   - 1999
+#   - 2000-2002
+#   - 2003
+#   - 2004
+#   - 2005-2019
+
 
 # Load raw mortality file - Function applies to data years 1990-1992
 load_mortality_file_90_92 <- function(year){
@@ -255,7 +263,625 @@ load_mortality_file_93_94 <- function(year){
 }
 
 
+# Load raw mortality file - Function applies to data year 1995
+load_mortality_file_95 <- function(year){
+  file_path <- paste("C:/Users/tangjy/Documents/MCD_files/MULT", year, "US.AllCnty.txt", sep = '')
+  file_name <- read.csv(file_path, header=FALSE)
+  
+  mort_year <- data.frame(matrix(ncol = 47, nrow = nrow(file_name)))
+  
+  colnames(mort_year) <- c('data_year',
+                           'reporting_area',
+                           'record_type',
+                           'resident_status',
+                           'death_month',
+                           'death_day_of_week',
+                           'occurrence_state',
+                           'occurrence_exp_state',
+                           'occurrence_county',
+                           'occurrence_county_pop',
+                           'occurrence_region',
+                           'occurrence_division',
+                           'occurrence_fipsstate',
+                           'occurrence_fipscounty',
+                           'residence_state',
+                           'residence_exp_state',
+                           'residence_county',
+                           'residence_county_pop',
+                           'residence_city',
+                           'residence_city_pop',
+                           'residence_met',
+                           'residence_region',
+                           'residence_division',
+                           'residence_psma',
+                           'residence_psma_pop',
+                           'residence_fipsstate',
+                           'residence_fipscounty',
+                           'residence_fips_pmsa',
+                           'residence_fips_cmsa',
+                           'sex',
+                           'race',
+                           'age',
+                           'marital_status',
+                           'birth_state',
+                           'hispanic1',
+                           'hispanic2',
+                           'industry1',
+                           'occupation1',
+                           'education1',
+                           'education2',
+                           'icd9',
+                           'cause_recode_282',
+                           'cause_recode_72',
+                           'cause_recode_61',
+                           'cause_recode_52',
+                           'cause_recode_34',
+                           'place_accident')
+  
+  mort_year$data_year <- substr(file_name$V1, 1, 2)
+  mort_year$reporting_area <- substr(file_name$V1, 3, 3)
+  mort_year$record_type <- substr(file_name$V1, 19, 19)
+  
+  mort_year$resident_status <- substr(file_name$V1, 20, 20)
+  mort_year$death_month <- substr(file_name$V1, 55, 56)
+  mort_year$death_day_of_week <- substr(file_name$V1, 83, 83) 
+  
+  mort_year$occurrence_state <- substr(file_name$V1, 21, 22)
+  mort_year$occurrence_exp_state <- substr(file_name$V1, 29, 30)
+  mort_year$occurrence_county <- substr(file_name$V1, 23, 25)
+  mort_year$occurrence_county_pop <- substr(file_name$V1, 49, 49)
+  mort_year$occurrence_region <- substr(file_name$V1, 26, 26)
+  mort_year$occurrence_division <- substr(file_name$V1, 27, 27)
+  mort_year$occurrence_fipsstate <- substr(file_name$V1, 119, 120)
+  mort_year$occurrence_fipscounty <- substr(file_name$V1, 121, 123)
+  
+  mort_year$residence_state <- substr(file_name$V1, 31, 32)
+  mort_year$residence_exp_state <- substr(file_name$V1, 44, 45) 
+  mort_year$residence_county <- substr(file_name$V1, 33, 35)
+  mort_year$residence_county_pop <- substr(file_name$V1, 50, 50)
+  mort_year$residence_city <- substr(file_name$V1, 36, 38)
+  mort_year$residence_city_pop <- substr(file_name$V1, 39, 39)
+  mort_year$residence_met <- substr(file_name$V1, 40, 40)
+  mort_year$residence_region <- substr(file_name$V1, 41, 41)
+  mort_year$residence_division <- substr(file_name$V1, 42, 42)
+  mort_year$residence_psma <- substr(file_name$V1, 46, 48)
+  mort_year$residence_psma_pop <- substr(file_name$V1, 51, 51)
+  mort_year$residence_fipsstate <- substr(file_name$V1, 124, 125)
+  mort_year$residence_fipscounty <- substr(file_name$V1,126, 128)
+  mort_year$residence_fips_pmsa <- substr(file_name$V1, 129, 132)
+  mort_year$residence_fips_cmsa <- substr(file_name$V1, 134, 135)
+  
+  mort_year$sex <- substr(file_name$V1, 59, 59)
+  mort_year$race <- substr(file_name$V1, 60, 63)
+  mort_year$age <- substr(file_name$V1, 64, 74)
+  mort_year$marital_status <- substr(file_name$V1, 77, 77)
+  mort_year$birth_state <- substr(file_name$V1, 78, 79)
+  mort_year$hispanic1 <- substr(file_name$V1, 80, 81)
+  mort_year$hispanic2 <- substr(file_name$V1, 82, 82)
+  mort_year$industry1 <- substr(file_name$V1, 85, 87)
+  mort_year$occupation1 <- substr(file_name$V1, 88, 90)
+  mort_year$education1 <- substr(file_name$V1, 52, 53)
+  mort_year$education2 <- substr(file_name$V1, 54, 54)
+  
+  mort_year$icd9 <- substr(file_name$V1, 142, 145)
+  mort_year$cause_recode_282 <- substr(file_name$V1, 146, 150)
+  mort_year$cause_recode_72 <- substr(file_name$V1, 151, 153)
+  mort_year$cause_recode_61 <- substr(file_name$V1, 154, 156)
+  mort_year$cause_recode_52 <- substr(file_name$V1, 91, 93)
+  mort_year$cause_recode_34 <- substr(file_name$V1, 157, 159)
+  
+  mort_year$place_accident <- substr(file_name$V1, 141, 141)
+  
+  mort_year_name <- paste("mort", year, sep="_")
+  assign(mort_year_name, mort_year, env=.GlobalEnv)
+  gc()
+}
 
+
+# Load raw mortality file - Function applies to data years 1996-1998
+load_mortality_file_96_98 <- function(year){
+  file_path <- paste("C:/Users/tangjy/Documents/MCD_files/MULT", year, "US.AllCnty.txt", sep = '')
+  file_name <- read.csv(file_path, header=FALSE)
+  
+  mort_year <- data.frame(matrix(ncol = 46, nrow = nrow(file_name)))
+  
+  colnames(mort_year) <- c('data_year',
+                           'record_type',
+                           'resident_status',
+                           'death_month',
+                           'death_day_of_week',
+                           'occurrence_state',
+                           'occurrence_exp_state',
+                           'occurrence_county',
+                           'occurrence_county_pop',
+                           'occurrence_region',
+                           'occurrence_division',
+                           'occurrence_fipsstate',
+                           'occurrence_fipscounty',
+                           'residence_state',
+                           'residence_exp_state',
+                           'residence_county',
+                           'residence_county_pop',
+                           'residence_city',
+                           'residence_city_pop',
+                           'residence_met',
+                           'residence_region',
+                           'residence_division',
+                           'residence_psma',
+                           'residence_psma_pop',
+                           'residence_fipsstate',
+                           'residence_fipscounty',
+                           'residence_fips_pmsa',
+                           'residence_fips_cmsa',
+                           'sex',
+                           'race',
+                           'age',
+                           'marital_status',
+                           'birth_state',
+                           'hispanic1',
+                           'hispanic2',
+                           'industry1',
+                           'occupation1',
+                           'education1',
+                           'education2',
+                           'icd9',
+                           'cause_recode_282',
+                           'cause_recode_72',
+                           'cause_recode_61',
+                           'cause_recode_52',
+                           'cause_recode_34',
+                           'place_accident')
+  
+  mort_year$data_year <- substr(file_name$V1, 115, 118)
+  mort_year$record_type <- substr(file_name$V1, 19, 19)
+  
+  mort_year$resident_status <- substr(file_name$V1, 20, 20)
+  mort_year$death_month <- substr(file_name$V1, 55, 56)
+  mort_year$death_day_of_week <- substr(file_name$V1, 83, 83) 
+  
+  mort_year$occurrence_state <- substr(file_name$V1, 21, 22)
+  mort_year$occurrence_exp_state <- substr(file_name$V1, 29, 30)
+  mort_year$occurrence_county <- substr(file_name$V1, 23, 25)
+  mort_year$occurrence_county_pop <- substr(file_name$V1, 49, 49)
+  mort_year$occurrence_region <- substr(file_name$V1, 26, 26)
+  mort_year$occurrence_division <- substr(file_name$V1, 27, 27)
+  mort_year$occurrence_fipsstate <- substr(file_name$V1, 119, 120)
+  mort_year$occurrence_fipscounty <- substr(file_name$V1, 121, 123)
+  
+  mort_year$residence_state <- substr(file_name$V1, 31, 32)
+  mort_year$residence_exp_state <- substr(file_name$V1, 44, 45) 
+  mort_year$residence_county <- substr(file_name$V1, 33, 35)
+  mort_year$residence_county_pop <- substr(file_name$V1, 50, 50)
+  mort_year$residence_city <- substr(file_name$V1, 36, 38)
+  mort_year$residence_city_pop <- substr(file_name$V1, 39, 39)
+  mort_year$residence_met <- substr(file_name$V1, 40, 40)
+  mort_year$residence_region <- substr(file_name$V1, 41, 41)
+  mort_year$residence_division <- substr(file_name$V1, 42, 42)
+  mort_year$residence_psma <- substr(file_name$V1, 46, 48)
+  mort_year$residence_psma_pop <- substr(file_name$V1, 51, 51)
+  mort_year$residence_fipsstate <- substr(file_name$V1, 124, 125)
+  mort_year$residence_fipscounty <- substr(file_name$V1,126, 128)
+  mort_year$residence_fips_pmsa <- substr(file_name$V1, 129, 132)
+  mort_year$residence_fips_cmsa <- substr(file_name$V1, 134, 135)
+  
+  mort_year$sex <- substr(file_name$V1, 59, 59)
+  mort_year$race <- substr(file_name$V1, 60, 63)
+  mort_year$age <- substr(file_name$V1, 64, 74)
+  mort_year$marital_status <- substr(file_name$V1, 77, 77)
+  mort_year$birth_state <- substr(file_name$V1, 78, 79)
+  mort_year$hispanic1 <- substr(file_name$V1, 80, 81)
+  mort_year$hispanic2 <- substr(file_name$V1, 82, 82)
+  mort_year$industry1 <- substr(file_name$V1, 85, 87)
+  mort_year$occupation1 <- substr(file_name$V1, 88, 90)
+  mort_year$education1 <- substr(file_name$V1, 52, 53)
+  mort_year$education2 <- substr(file_name$V1, 54, 54)
+  
+  mort_year$icd9 <- substr(file_name$V1, 142, 145)
+  mort_year$cause_recode_282 <- substr(file_name$V1, 146, 150)
+  mort_year$cause_recode_72 <- substr(file_name$V1, 151, 153)
+  mort_year$cause_recode_61 <- substr(file_name$V1, 154, 156)
+  mort_year$cause_recode_52 <- substr(file_name$V1, 91, 93)
+  mort_year$cause_recode_34 <- substr(file_name$V1, 157, 159)
+  
+  mort_year$place_accident <- substr(file_name$V1, 141, 141)
+  
+  mort_year_name <- paste("mort", year, sep="_")
+  assign(mort_year_name, mort_year, env=.GlobalEnv)
+  gc()
+}
+
+
+load_mortality_file_99 <- function(year){
+  file_path <- paste("C:/Users/tangjy/Documents/MCD_files/MULT", year, "US.AllCnty.txt", sep = '')
+  file_name <- read.csv(file_path, header=FALSE)
+  
+  mort_year <- data.frame(matrix(ncol = 45, nrow = nrow(file_name)))
+  
+  colnames(mort_year) <- c('data_year',
+                           'record_type',
+                           'resident_status',
+                           'death_month',
+                           'death_day_of_week',
+                           'occurrence_state',
+                           'occurrence_exp_state',
+                           'occurrence_county',
+                           'occurrence_county_pop',
+                           'occurrence_region',
+                           'occurrence_division',
+                           'occurrence_fipsstate',
+                           'occurrence_fipscounty',
+                           'residence_state',
+                           'residence_exp_state',
+                           'residence_county',
+                           'residence_county_pop',
+                           'residence_city',
+                           'residence_city_pop',
+                           'residence_met',
+                           'residence_region',
+                           'residence_division',
+                           'residence_psma',
+                           'residence_psma_pop',
+                           'residence_fipsstate',
+                           'residence_fipscounty',
+                           'residence_fips_pmsa',
+                           'residence_fips_cmsa',
+                           'sex',
+                           'race',
+                           'age',
+                           'marital_status',
+                           'birth_state',
+                           'hispanic1',
+                           'hispanic2',
+                           'industry1',
+                           'occupation1',
+                           'education1',
+                           'education2',
+                           'icd10',
+                           'cause_recode_358',
+                           'cause_recode_113',
+                           'cause_recode_130',
+                           'cause_recode_39',
+                           'place_accident')
+  
+  mort_year$data_year <- substr(file_name$V1, 115, 118)
+  mort_year$record_type <- substr(file_name$V1, 19, 19)
+  
+  mort_year$resident_status <- substr(file_name$V1, 20, 20)
+  mort_year$death_month <- substr(file_name$V1, 55, 56)
+  mort_year$death_day_of_week <- substr(file_name$V1, 83, 83) 
+  
+  mort_year$occurrence_state <- substr(file_name$V1, 21, 22)
+  mort_year$occurrence_exp_state <- substr(file_name$V1, 29, 30)
+  mort_year$occurrence_county <- substr(file_name$V1, 23, 25)
+  mort_year$occurrence_county_pop <- substr(file_name$V1, 49, 49)
+  mort_year$occurrence_region <- substr(file_name$V1, 26, 26)
+  mort_year$occurrence_division <- substr(file_name$V1, 27, 27)
+  mort_year$occurrence_fipsstate <- substr(file_name$V1, 119, 120)
+  mort_year$occurrence_fipscounty <- substr(file_name$V1, 121, 123)
+  
+  mort_year$residence_state <- substr(file_name$V1, 31, 32)
+  mort_year$residence_exp_state <- substr(file_name$V1, 44, 45) 
+  mort_year$residence_county <- substr(file_name$V1, 33, 35)
+  mort_year$residence_county_pop <- substr(file_name$V1, 50, 50)
+  mort_year$residence_city <- substr(file_name$V1, 36, 38)
+  mort_year$residence_city_pop <- substr(file_name$V1, 39, 39)
+  mort_year$residence_met <- substr(file_name$V1, 40, 40)
+  mort_year$residence_region <- substr(file_name$V1, 41, 41)
+  mort_year$residence_division <- substr(file_name$V1, 42, 42)
+  mort_year$residence_psma <- substr(file_name$V1, 46, 48)
+  mort_year$residence_psma_pop <- substr(file_name$V1, 51, 51)
+  mort_year$residence_fipsstate <- substr(file_name$V1, 124, 125)
+  mort_year$residence_fipscounty <- substr(file_name$V1,126, 128)
+  mort_year$residence_fips_pmsa <- substr(file_name$V1, 129, 132)
+  mort_year$residence_fips_cmsa <- substr(file_name$V1, 134, 135)
+  
+  mort_year$sex <- substr(file_name$V1, 59, 59)
+  mort_year$race <- substr(file_name$V1, 60, 63)
+  mort_year$age <- substr(file_name$V1, 64, 74)
+  mort_year$marital_status <- substr(file_name$V1, 77, 77)
+  mort_year$birth_state <- substr(file_name$V1, 78, 79)
+  mort_year$hispanic1 <- substr(file_name$V1, 80, 81)
+  mort_year$hispanic2 <- substr(file_name$V1, 82, 82)
+  mort_year$industry1 <- substr(file_name$V1, 85, 87)
+  mort_year$occupation1 <- substr(file_name$V1, 88, 90)
+  mort_year$education1 <- substr(file_name$V1, 52, 53)
+  mort_year$education2 <- substr(file_name$V1, 54, 54)
+  
+  mort_year$icd10 <- substr(file_name$V1, 142, 145)
+  mort_year$cause_recode_358 <- substr(file_name$V1, 146, 148)
+  mort_year$cause_recode_113 <- substr(file_name$V1, 151, 153)
+  mort_year$cause_recode_130 <- substr(file_name$V1, 154, 156)
+  mort_year$cause_recode_39 <- substr(file_name$V1, 157, 158)
+
+  mort_year$place_accident <- substr(file_name$V1, 141, 141)
+  
+  mort_year_name <- paste("mort", year, sep="_")
+  assign(mort_year_name, mort_year, env=.GlobalEnv)
+  gc()
+}
+
+
+load_mortality_file_00_02 <- function(year){
+  file_path <- paste("C:/Users/tangjy/Documents/MCD_files/MULT", year, "US.AllCnty.txt", sep = '')
+  file_name <- read.csv(file_path, header=FALSE)
+  
+  mort_year <- data.frame(matrix(ncol = 44, nrow = nrow(file_name)))
+  
+  colnames(mort_year) <- c('data_year',
+                           'record_type',
+                           'resident_status',
+                           'death_date',
+                           'death_day_of_week',
+                           'occurrence_state',
+                           'occurrence_exp_state',
+                           'occurrence_county',
+                           'occurrence_county_pop',
+                           'occurrence_region',
+                           'occurrence_division',
+                           'occurrence_fipsstate',
+                           'occurrence_fipscounty',
+                           'residence_state',
+                           'residence_exp_state',
+                           'residence_county',
+                           'residence_county_pop',
+                           'residence_city',
+                           'residence_city_pop',
+                           'residence_met',
+                           'residence_region',
+                           'residence_division',
+                           'residence_psma',
+                           'residence_psma_pop',
+                           'residence_fipsstate',
+                           'residence_fipscounty',
+                           'residence_fips_pmsa',
+                           'residence_fips_cmsa',
+                           'sex',
+                           'race',
+                           'age',
+                           'marital_status',
+                           'birth_state',
+                           'hispanic1',
+                           'hispanic2',
+                           'education1',
+                           'education2',
+                           'date_of_birth',
+                           'icd10',
+                           'cause_recode_358',
+                           'cause_recode_113',
+                           'cause_recode_130',
+                           'cause_recode_39',
+                           'place_accident')
+  
+  mort_year$data_year <- substr(file_name$V1, 115, 118)
+  mort_year$record_type <- substr(file_name$V1, 19, 19)
+  
+  mort_year$resident_status <- substr(file_name$V1, 20, 20)
+  mort_year$death_date <- substr(file_name$V1, 55, 58)
+  mort_year$death_day_of_week <- substr(file_name$V1, 83, 83) 
+  
+  mort_year$occurrence_state <- substr(file_name$V1, 21, 22)
+  mort_year$occurrence_exp_state <- substr(file_name$V1, 29, 30)
+  mort_year$occurrence_county <- substr(file_name$V1, 23, 25)
+  mort_year$occurrence_county_pop <- substr(file_name$V1, 49, 49)
+  mort_year$occurrence_region <- substr(file_name$V1, 26, 26)
+  mort_year$occurrence_division <- substr(file_name$V1, 27, 27)
+  mort_year$occurrence_fipsstate <- substr(file_name$V1, 119, 120)
+  mort_year$occurrence_fipscounty <- substr(file_name$V1, 121, 123)
+  
+  mort_year$residence_state <- substr(file_name$V1, 31, 32)
+  mort_year$residence_exp_state <- substr(file_name$V1, 44, 45) 
+  mort_year$residence_county <- substr(file_name$V1, 33, 35)
+  mort_year$residence_county_pop <- substr(file_name$V1, 50, 50)
+  mort_year$residence_city <- substr(file_name$V1, 36, 38)
+  mort_year$residence_city_pop <- substr(file_name$V1, 39, 39)
+  mort_year$residence_met <- substr(file_name$V1, 40, 40)
+  mort_year$residence_region <- substr(file_name$V1, 41, 41)
+  mort_year$residence_division <- substr(file_name$V1, 42, 42)
+  mort_year$residence_psma <- substr(file_name$V1, 46, 48)
+  mort_year$residence_psma_pop <- substr(file_name$V1, 51, 51)
+  mort_year$residence_fipsstate <- substr(file_name$V1, 124, 125)
+  mort_year$residence_fipscounty <- substr(file_name$V1,126, 128)
+  mort_year$residence_fips_pmsa <- substr(file_name$V1, 129, 132)
+  mort_year$residence_fips_cmsa <- substr(file_name$V1, 134, 135)
+  
+  mort_year$sex <- substr(file_name$V1, 59, 59)
+  mort_year$race <- substr(file_name$V1, 60, 63)
+  mort_year$age <- substr(file_name$V1, 64, 74)
+  mort_year$marital_status <- substr(file_name$V1, 77, 77)
+  mort_year$birth_state <- substr(file_name$V1, 78, 79)
+  mort_year$hispanic1 <- substr(file_name$V1, 80, 81)
+  mort_year$hispanic2 <- substr(file_name$V1, 82, 82)
+  mort_year$education1 <- substr(file_name$V1, 52, 53)
+  mort_year$education2 <- substr(file_name$V1, 54, 54)
+  mort_year$date_of_birth <- substr(file_name$V1, 102, 109)
+  
+  mort_year$icd10 <- substr(file_name$V1, 142, 145)
+  mort_year$cause_recode_358 <- substr(file_name$V1, 146, 148)
+  mort_year$cause_recode_113 <- substr(file_name$V1, 151, 153)
+  mort_year$cause_recode_130 <- substr(file_name$V1, 154, 156)
+  mort_year$cause_recode_39 <- substr(file_name$V1, 157, 158)
+  
+  mort_year$place_accident <- substr(file_name$V1, 141, 141)
+  
+  mort_year_name <- paste("mort", year, sep="_")
+  assign(mort_year_name, mort_year, env=.GlobalEnv)
+  gc()
+}
+
+
+load_mortality_file_03 <- function(year){
+  file_path <- paste("C:/Users/tangjy/Documents/MCD_files/MULT", year, "US.AllCnty.txt", sep = '')
+  file_name <- read.csv(file_path, header=FALSE)
+  
+  mort_year <- data.frame(matrix(ncol = 33, nrow = nrow(file_name)))
+  
+  colnames(mort_year) <- c('data_year',
+                           'record_type',
+                           'resident_status',
+                           'death_date',
+                           'death_day_of_week',
+                           'occurrence_state',
+                           'occurrence_exp_state',
+                           'occurrence_county',
+                           'occurrence_county_pop',
+                           'residence_state',
+                           'residence_exp_state',
+                           'residence_county',
+                           'residence_county_pop',
+                           'residence_city',
+                           'residence_city_pop',
+                           'residence_met',
+                           'residence_psma_pop',
+                           'residence_fips_pmsa',
+                           'residence_fips_cmsa',
+                           'sex',
+                           'race',
+                           'age',
+                           'marital_status',
+                           'birth_state',
+                           'hispanic',
+                           'education',
+                           'date_of_birth',
+                           'icd10',
+                           'cause_recode_358',
+                           'cause_recode_113',
+                           'cause_recode_130',
+                           'cause_recode_39',
+                           'place_accident')
+  
+  mort_year$data_year <- substr(file_name$V1, 102, 105)
+  mort_year$record_type <- substr(file_name$V1, 19, 19)
+  
+  mort_year$resident_status <- substr(file_name$V1, 20, 20)
+  mort_year$death_date <- substr(file_name$V1, 65, 68)
+  mort_year$death_day_of_week <- substr(file_name$V1, 85, 85) 
+  
+  mort_year$occurrence_state <- substr(file_name$V1, 21, 22)
+  mort_year$occurrence_exp_state <- substr(file_name$V1, 26, 27)
+  mort_year$occurrence_county <- substr(file_name$V1, 23, 25)
+  mort_year$occurrence_county_pop <- substr(file_name$V1, 28, 28)
+  
+  mort_year$residence_state <- substr(file_name$V1, 29, 30)
+  mort_year$residence_exp_state <- substr(file_name$V1, 45, 46) 
+  mort_year$residence_county <- substr(file_name$V1, 35, 37)
+  mort_year$residence_county_pop <- substr(file_name$V1, 51, 51)
+  mort_year$residence_city <- substr(file_name$V1, 38, 42)
+  mort_year$residence_city_pop <- substr(file_name$V1, 43, 43)
+  mort_year$residence_met <- substr(file_name$V1, 44, 44)
+  mort_year$residence_psma_pop <- substr(file_name$V1, 52, 52)
+  mort_year$residence_fips_pmsa <- substr(file_name$V1, 47, 50)
+  mort_year$residence_fips_cmsa <- substr(file_name$V1, 53, 54)
+  
+  mort_year$sex <- substr(file_name$V1, 69, 69)
+  mort_year$race <- substr(file_name$V1, 445, 450)
+  mort_year$age <- substr(file_name$V1, 70, 82)
+  mort_year$marital_status <- substr(file_name$V1, 84, 84)
+  mort_year$birth_state <- substr(file_name$V1, 55, 60)
+  mort_year$hispanic <- substr(file_name$V1, 484, 488)
+  mort_year$education <- substr(file_name$V1, 61, 64)
+  mort_year$date_of_birth <- substr(file_name$V1, 86, 93)
+  
+  mort_year$icd10 <- substr(file_name$V1, 146, 149)
+  mort_year$cause_recode_358 <- substr(file_name$V1, 150, 152)
+  mort_year$cause_recode_113 <- substr(file_name$V1, 154, 156)
+  mort_year$cause_recode_130 <- substr(file_name$V1, 157, 159)
+  mort_year$cause_recode_39 <- substr(file_name$V1, 160, 161)
+  
+  mort_year$place_accident <- substr(file_name$V1, 145, 145)
+  
+  mort_year_name <- paste("mort", year, sep="_")
+  assign(mort_year_name, mort_year, env=.GlobalEnv)
+  gc()
+}
+
+
+load_mortality_file_04 <- function(year){
+  file_path <- paste("C:/Users/tangjy/Documents/MCD_files/MULT", year, "US.AllCnty.txt", sep = '')
+  file_name <- read.csv(file_path, header=FALSE)
+  
+  mort_year <- data.frame(matrix(ncol = 32, nrow = nrow(file_name)))
+  
+  colnames(mort_year) <- c('data_year',
+                           'record_type',
+                           'resident_status',
+                           'death_date',
+                           'death_day_of_week',
+                           'occurrence_state',
+                           'occurrence_exp_state',
+                           'occurrence_county',
+                           'occurrence_county_pop',
+                           'residence_state',
+                           'residence_exp_state',
+                           'residence_county',
+                           'residence_county_pop',
+                           'residence_city',
+                           'residence_city_pop',
+                           'residence_met',
+                           'residence_psma_pop',
+                           'residence_fips_pmsa',
+                           'residence_fips_cmsa',
+                           'sex',
+                           'race',
+                           'age',
+                           'marital_status',
+                           'birth_state',
+                           'hispanic',
+                           'education',
+                           'icd10',
+                           'cause_recode_358',
+                           'cause_recode_113',
+                           'cause_recode_130',
+                           'cause_recode_39',
+                           'place_accident')
+  
+  mort_year$data_year <- substr(file_name$V1, 102, 105)
+  mort_year$record_type <- substr(file_name$V1, 19, 19)
+  
+  mort_year$resident_status <- substr(file_name$V1, 20, 20)
+  mort_year$death_date <- substr(file_name$V1, 65, 68)
+  mort_year$death_day_of_week <- substr(file_name$V1, 85, 85) 
+  
+  mort_year$occurrence_state <- substr(file_name$V1, 21, 22)
+  mort_year$occurrence_exp_state <- substr(file_name$V1, 26, 27)
+  mort_year$occurrence_county <- substr(file_name$V1, 23, 25)
+  mort_year$occurrence_county_pop <- substr(file_name$V1, 28, 28)
+  
+  mort_year$residence_state <- substr(file_name$V1, 29, 30)
+  mort_year$residence_exp_state <- substr(file_name$V1, 45, 46) 
+  mort_year$residence_county <- substr(file_name$V1, 35, 37)
+  mort_year$residence_county_pop <- substr(file_name$V1, 51, 51)
+  mort_year$residence_city <- substr(file_name$V1, 38, 42)
+  mort_year$residence_city_pop <- substr(file_name$V1, 43, 43)
+  mort_year$residence_met <- substr(file_name$V1, 44, 44)
+  mort_year$residence_psma_pop <- substr(file_name$V1, 52, 52)
+  mort_year$residence_fips_pmsa <- substr(file_name$V1, 47, 50)
+  mort_year$residence_fips_cmsa <- substr(file_name$V1, 53, 54)
+  
+  mort_year$sex <- substr(file_name$V1, 69, 69)
+  mort_year$race <- substr(file_name$V1, 445, 450)
+  mort_year$age <- substr(file_name$V1, 70, 82)
+  mort_year$marital_status <- substr(file_name$V1, 84, 84)
+  mort_year$birth_state <- substr(file_name$V1, 55, 60)
+  mort_year$hispanic <- substr(file_name$V1, 484, 488)
+  mort_year$education <- substr(file_name$V1, 61, 64)
+  
+  mort_year$icd10 <- substr(file_name$V1, 146, 149)
+  mort_year$cause_recode_358 <- substr(file_name$V1, 150, 152)
+  mort_year$cause_recode_113 <- substr(file_name$V1, 154, 156)
+  mort_year$cause_recode_130 <- substr(file_name$V1, 157, 159)
+  mort_year$cause_recode_39 <- substr(file_name$V1, 160, 161)
+  
+  mort_year$place_accident <- substr(file_name$V1, 145, 145)
+  
+  mort_year_name <- paste("mort", year, sep="_")
+  assign(mort_year_name, mort_year, env=.GlobalEnv)
+  gc()
+}
+
+
+# Run each year separately since data is very large
+# Save to interim folder
+# Would recommend zipping files to save space 
 
 load_mortality_file_90_92('1990')
 write.csv(mort_1990, "C:/Users/tangjy/Documents/interim/mort_1990.csv", row.names = F)
@@ -277,13 +903,45 @@ load_mortality_file_93_94('1994')
 write.csv(mort_1994, "C:/Users/tangjy/Documents/interim/mort_1994.csv", row.names = F)
 gc()
 
+load_mortality_file_95('1995')
+write.csv(mort_1995, "C:/Users/tangjy/Documents/interim/mort_1995.csv", row.names = F)
+gc()
 
+load_mortality_file_96_98('1996')
+write.csv(mort_1996, "C:/Users/tangjy/Documents/interim/mort_1996.csv", row.names = F)
+gc()
 
+load_mortality_file_96_98('1997')
+write.csv(mort_1997, "C:/Users/tangjy/Documents/interim/mort_1997.csv", row.names = F)
+gc()
 
+load_mortality_file_96_98('1998')
+write.csv(mort_1998, "C:/Users/tangjy/Documents/interim/mort_1998.csv", row.names = F)
+gc()
 
+load_mortality_file_99('1999')
+write.csv(mort_1999, "C:/Users/tangjy/Documents/interim/mort_1999.csv", row.names = F)
+gc()
 
+load_mortality_file_00_02('2000')
+write.csv(mort_2000, "C:/Users/tangjy/Documents/interim/mort_2000.csv", row.names = F)
+gc()
 
+load_mortality_file_00_02('2001')
+write.csv(mort_2001, "C:/Users/tangjy/Documents/interim/mort_2001.csv", row.names = F)
+gc()
 
+load_mortality_file_00_02('2002')
+write.csv(mort_2002, "C:/Users/tangjy/Documents/interim/mort_2002.csv", row.names = F)
+gc()
+
+load_mortality_file_03('2003')
+write.csv(mort_2003, "C:/Users/tangjy/Documents/interim/mort_2003.csv", row.names = F)
+gc()
+
+load_mortality_file_04('2004')
+write.csv(mort_2004, "C:/Users/tangjy/Documents/interim/mort_2004.csv", row.names = F)
+gc()
 
 
 
