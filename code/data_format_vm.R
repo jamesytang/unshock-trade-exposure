@@ -158,7 +158,7 @@ load_mortality_file_05_19 <- function(year){
 }
 
 
-# Run function to load and format complete mortality files
+# Function to load and format complete mortality files
 # Save as csv files to interim directory
 # Files are large so clear R environment between runs 
 load_mortality_file_05_19('2005')
@@ -209,7 +209,7 @@ gc()
 
 
 
-
+# Function to select relevant columns and filter for deaths of despair conditions
 cleaned_mortality_file <- function(loaded_file, year){
   cleaned_file <- loaded_file %>%
     select(current_data_year,
@@ -234,7 +234,6 @@ cleaned_mortality_file <- function(loaded_file, year){
   
   mort_year_name <- paste("cleaned_mort", year, sep="_")
   assign(mort_year_name, cleaned_file, env=.GlobalEnv)
-  
 }
 
 cleaned_mortality_file(mort_2013, '2013')
