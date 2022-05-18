@@ -879,87 +879,12 @@ load_mortality_file_04 <- function(year){
 }
 
 
-# Run each year separately since data is very large
-# Save to interim folder
-# Would recommend zipping files to save space 
-
-load_mortality_file_90_92('1990')
-write.csv(mort_1990, "C:/Users/tangjy/Documents/interim/mort_1990.csv", row.names = F)
-gc()
-
-load_mortality_file_90_92('1991')
-write.csv(mort_1991, "C:/Users/tangjy/Documents/interim/mort_1991.csv", row.names = F)
-gc()
-
-load_mortality_file_90_92('1992')
-write.csv(mort_1992, "C:/Users/tangjy/Documents/interim/mort_1992.csv", row.names = F)
-gc()
-
-load_mortality_file_93_94('1993')
-write.csv(mort_1993, "C:/Users/tangjy/Documents/interim/mort_1993.csv", row.names = F)
-gc()
-
-load_mortality_file_93_94('1994')
-write.csv(mort_1994, "C:/Users/tangjy/Documents/interim/mort_1994.csv", row.names = F)
-gc()
-
-load_mortality_file_95('1995')
-write.csv(mort_1995, "C:/Users/tangjy/Documents/interim/mort_1995.csv", row.names = F)
-gc()
-
-load_mortality_file_96_98('1996')
-write.csv(mort_1996, "C:/Users/tangjy/Documents/interim/mort_1996.csv", row.names = F)
-gc()
-
-load_mortality_file_96_98('1997')
-write.csv(mort_1997, "C:/Users/tangjy/Documents/interim/mort_1997.csv", row.names = F)
-gc()
-
-load_mortality_file_96_98('1998')
-write.csv(mort_1998, "C:/Users/tangjy/Documents/interim/mort_1998.csv", row.names = F)
-gc()
-
-load_mortality_file_99('1999')
-write.csv(mort_1999, "C:/Users/tangjy/Documents/interim/mort_1999.csv", row.names = F)
-gc()
-
-load_mortality_file_00_02('2000')
-write.csv(mort_2000, "C:/Users/tangjy/Documents/interim/mort_2000.csv", row.names = F)
-gc()
-
-load_mortality_file_00_02('2001')
-write.csv(mort_2001, "C:/Users/tangjy/Documents/interim/mort_2001.csv", row.names = F)
-gc()
-
-load_mortality_file_00_02('2002')
-write.csv(mort_2002, "C:/Users/tangjy/Documents/interim/mort_2002.csv", row.names = F)
-gc()
-
-load_mortality_file_03('2003')
-write.csv(mort_2003, "C:/Users/tangjy/Documents/interim/mort_2003.csv", row.names = F)
-gc()
-
-load_mortality_file_04('2004')
-write.csv(mort_2004, "C:/Users/tangjy/Documents/interim/mort_2004.csv", row.names = F)
-gc()
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 
 # Load raw mortality file - Function applies to data years 2005-2019
-# Note: Raw .txt files are one string per death with information coded by string position 
-# Following code converts strings to separate columns using substrings
 load_mortality_file_05_19 <- function(year){
   file_path <- paste("C:/Users/tangjy/Documents/MCD_files/MULT", year, "US.AllCnty.txt", sep = '')
   file_name <- read.csv(file_path, header=FALSE)
@@ -1106,212 +1031,136 @@ load_mortality_file_05_19 <- function(year){
 }
 
 
-# Function to load and format complete mortality files
-# Save as csv files to interim directory
-# Files are large so clear R environment between runs 
+
+# ---------------------------------------------------------------------------------------------------------
+
+# Run each year separately since data is very large
+# Save as csv files to interim folder
+# Would recommend zipping files to save space 
+
+load_mortality_file_90_92('1990')
+write.csv(mort_1990, "C:/Users/tangjy/Documents/interim/mort_1990.csv", row.names = F)
+gc()
+
+load_mortality_file_90_92('1991')
+write.csv(mort_1991, "C:/Users/tangjy/Documents/interim/mort_1991.csv", row.names = F)
+gc()
+
+load_mortality_file_90_92('1992')
+write.csv(mort_1992, "C:/Users/tangjy/Documents/interim/mort_1992.csv", row.names = F)
+gc()
+
+load_mortality_file_93_94('1993')
+write.csv(mort_1993, "C:/Users/tangjy/Documents/interim/mort_1993.csv", row.names = F)
+gc()
+
+load_mortality_file_93_94('1994')
+write.csv(mort_1994, "C:/Users/tangjy/Documents/interim/mort_1994.csv", row.names = F)
+gc()
+
+load_mortality_file_95('1995')
+write.csv(mort_1995, "C:/Users/tangjy/Documents/interim/mort_1995.csv", row.names = F)
+gc()
+
+load_mortality_file_96_98('1996')
+write.csv(mort_1996, "C:/Users/tangjy/Documents/interim/mort_1996.csv", row.names = F)
+gc()
+
+load_mortality_file_96_98('1997')
+write.csv(mort_1997, "C:/Users/tangjy/Documents/interim/mort_1997.csv", row.names = F)
+gc()
+
+load_mortality_file_96_98('1998')
+write.csv(mort_1998, "C:/Users/tangjy/Documents/interim/mort_1998.csv", row.names = F)
+gc()
+
+load_mortality_file_99('1999')
+write.csv(mort_1999, "C:/Users/tangjy/Documents/interim/mort_1999.csv", row.names = F)
+gc()
+
+load_mortality_file_00_02('2000')
+write.csv(mort_2000, "C:/Users/tangjy/Documents/interim/mort_2000.csv", row.names = F)
+gc()
+
+load_mortality_file_00_02('2001')
+write.csv(mort_2001, "C:/Users/tangjy/Documents/interim/mort_2001.csv", row.names = F)
+gc()
+
+load_mortality_file_00_02('2002')
+write.csv(mort_2002, "C:/Users/tangjy/Documents/interim/mort_2002.csv", row.names = F)
+gc()
+
+load_mortality_file_03('2003')
+write.csv(mort_2003, "C:/Users/tangjy/Documents/interim/mort_2003.csv", row.names = F)
+gc()
+
+load_mortality_file_04('2004')
+write.csv(mort_2004, "C:/Users/tangjy/Documents/interim/mort_2004.csv", row.names = F)
+gc()
+
 load_mortality_file_05_19('2005')
 write.csv(mort_2005, "C:/Users/tangjy/Documents/interim/mort_2005.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2006')
 write.csv(mort_2006, "C:/Users/tangjy/Documents/interim/mort_2006.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2007')
 write.csv(mort_2007, "C:/Users/tangjy/Documents/interim/mort_2007.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2008')
 write.csv(mort_2008, "C:/Users/tangjy/Documents/interim/mort_2008.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2009')
 write.csv(mort_2009, "C:/Users/tangjy/Documents/interim/mort_2009.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2010')
 write.csv(mort_2010, "C:/Users/tangjy/Documents/interim/mort_2010.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2011')
 write.csv(mort_2011, "C:/Users/tangjy/Documents/interim/mort_2011.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2012')
 write.csv(mort_2012, "C:/Users/tangjy/Documents/interim/mort_2012.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2013')
 write.csv(mort_2013, "C:/Users/tangjy/Documents/interim/mort_2013.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2014')
 write.csv(mort_2014, "C:/Users/tangjy/Documents/interim/mort_2014.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2015')
 write.csv(mort_2015, "C:/Users/tangjy/Documents/interim/mort_2015.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2016')
 write.csv(mort_2016, "C:/Users/tangjy/Documents/interim/mort_2016.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2017')
 write.csv(mort_2017, "C:/Users/tangjy/Documents/interim/mort_2017.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2018')
 write.csv(mort_2018, "C:/Users/tangjy/Documents/interim/mort_2018.csv", row.names = F)
 gc()
+
 load_mortality_file_05_19('2019')
 write.csv(mort_2019, "C:/Users/tangjy/Documents/interim/mort_2019.csv", row.names = F)
 gc()
 
 
-
-# Function to select relevant columns and filter for deaths of despair conditions
-cleaned_mortality_file <- function(loaded_file, year){
-  cleaned_file <- loaded_file %>%
-    select(current_data_year,
-           death_month,
-           state_residence, 
-           county_residence, 
-           education_2003_cd,
-           sex,
-           age_recode_27,
-           marital_status,
-           manner_of_death,
-           icd_code,
-           cause_recode_358,
-           race,
-           hispanic_origin_recode) %>%
-    filter(cause_recode_358 %in% c('424', '425', '426', '427',          # Suicide
-                                   '428', '429', '430', '431',
-                                   '420', '443',                        # Drug Overdose
-                                   '298')) %>%                          # ARLD
-    left_join(state_fips_xwalk, by = c('state_residence'='state_abbrev')) %>%
-    select(-?..state)
-  
-  mort_year_name <- paste("cleaned_mort", year, sep="_")
-  assign(mort_year_name, cleaned_file, env=.GlobalEnv)
-}
-
-cleaned_mortality_file(mort_2013, '2013')
-#rm(mort_2013)
-gc()
-cleaned_mortality_file(mort_2014, '2014')
-rm(mort_2014)
-gc()
-cleaned_mortality_file(mort_2015, '2015')
-rm(mort_2015)
-gc()
-cleaned_mortality_file(mort_2016, '2016')
-rm(mort_2016)
-gc()
-cleaned_mortality_file(mort_2017, '2017')
-rm(mort_2017)
-gc()
-cleaned_mortality_file(mort_2018, '2018')
-rm(mort_2018)
-gc()
-cleaned_mortality_file(mort_2019, '2019')
-rm(mort_2019)
-gc()
-
-cleaned_mort_2013_2019 <- bind_rows(
-  cleaned_mort_2013,
-  cleaned_mort_2014, 
-  cleaned_mort_2015,
-  cleaned_mort_2016,
-  cleaned_mort_2017,
-  cleaned_mort_2018,
-  cleaned_mort_2019
-)
-
-
-write.csv(cleaned_mort_2013_2019, "C:/Users/tangjy/Documents/interim/cleaned_mort_2013_2019.csv", row.names = F)
-
-
-# Start here 
-# cleaned_mort_2013_2019 <- read.csv("C:/Users/tangjy/Documents/interim/cleaned_mort_2013_2019.csv")
-
-# one hot encoding
-cleaned_mort_2013_2019 <- cleaned_mort_2013_2019 %>%
-  mutate(suicide = ifelse(cause_recode_358 %in% c('424', '425', '426', '427', '428', '429', '430', '431'), 1, 0),
-         drug_overdose = ifelse(cause_recode_358 %in% c('420', '443'), 1, 0),
-         arld = ifelse(cause_recode_358 == '298', 1, 0)) %>%
-  mutate(age_00_19 = ifelse(age_recode_27 %in% c(1,2,3,4,5,6,7,8,9), 1, 0),
-         age_20_24 = ifelse(age_recode_27 == 10, 1, 0),
-         age_25_29 = ifelse(age_recode_27 == 11, 1, 0), 
-         age_30_34 = ifelse(age_recode_27 == 12, 1, 0),
-         age_35_39 = ifelse(age_recode_27 == 13, 1, 0),
-         age_40_44 = ifelse(age_recode_27 == 14, 1, 0),
-         age_45_49 = ifelse(age_recode_27 == 15, 1, 0),
-         age_50_54 = ifelse(age_recode_27 == 16, 1, 0),
-         age_55_59 = ifelse(age_recode_27 == 17, 1, 0),
-         age_60_64 = ifelse(age_recode_27 == 18, 1, 0),
-         age_65_100 = ifelse(age_recode_27 %in% c(19,20,21,22,23,24,25,26), 1, 0)) %>%
-  mutate(race_white = ifelse(race == 1, 1, 0),
-         race_black = ifelse(race == 2, 1, 0),
-         race_amerin = ifelse(race == 3, 1, 0),
-         race_asian = ifelse(race %in% c(4,5,6,7,18,28,38,48,58,68,78), 1, 0)) %>%
-  mutate(gender_male = ifelse(sex == 'M', 1, 0),
-         gender_female = ifelse(sex == 'F', 1, 0)) %>%
-  mutate(middle_school = ifelse(education_2003_cd == 1, 1, 0),
-         part_high_school = ifelse(education_2003_cd == 2, 1, 0),
-         high_school_grad_ged = ifelse(education_2003_cd == 3, 1, 0),
-         part_college = ifelse(education_2003_cd == 4, 1, 0),
-         associate_degree = ifelse(education_2003_cd == 5, 1, 0),
-         bachelor_degree = ifelse(education_2003_cd == 6, 1, 0),
-         master_degree = ifelse(education_2003_cd == 7, 1, 0),
-         doctorate_degree = ifelse(education_2003_cd == 8, 1, 0))
-
-
-# ----------------------------------------------
-# Aggregate data at the county level 
-county_year_mort <- cleaned_mort_2013_2019 %>%
-  mutate(fips_cd = state_fips*1000 + county_residence) %>%
-  group_by(current_data_year, fips_cd) %>%
-  summarise(
-    total_deaths_of_despair = n(),
-    suicide_deaths = sum(ifelse(cause_recode_358 %in% c('424', '425', '426', '427', '428', '429', '430', '431'), 1, 0)),
-    drug_overdose_deaths = sum(ifelse(cause_recode_358 %in% c('420', '443'), 1, 0)),
-    arld_deaths = sum(ifelse(cause_recode_358=='298', 1, 0))
-  ) 
-
-
-
-
-
-
-
-
-
-# Importing cleaned SEER Population data by county 2014-2019
-county_pop_2013_2019 <- read.csv("C:/Users/tangjy/Documents/imported_data/county_pop_2014_2019.csv")
-
-
-
-# Join death data with county population data to create death rates
-# Use total death rates for now
-county_outcomes_2014_2019 <- county_year_mort %>%
-  left_join(county_pop_2014_2019, by=c('current_data_year'='year', 'fips_cd'='fips_cd')) %>%
-  select(current_data_year, 
-         fips_cd,
-         total_pop, 
-         total_deaths_of_despair,
-         suicide_deaths,
-         drug_overdose_deaths,
-         arld_deaths) %>%
-  mutate(deaths_of_despair_rate = total_deaths_of_despair/total_pop,
-         suicide_rate = suicide_deaths/total_pop,
-         drug_overdose_rate = drug_overdose_deaths/total_pop,
-         arld_rate = arld_deaths/total_pop) 
-
-
-county_outcomes_1 <- county_outcomes_2014_2019 %>%
-  select(current_data_year, 
-         fips_cd,
-         deaths_of_despair_rate,
-         suicide_rate,
-         drug_overdose_rate,
-         arld_rate)
-
-write.csv(county_outcomes_1, "C:/Users/tangjy/Documents/interim/county_outcomes_1.csv", row.names = F)
-
-
-
-
-
-
+# END File 
+# ---------------------------------------------------------------------------------------------------------
 
 
 
