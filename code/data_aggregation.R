@@ -1071,7 +1071,7 @@ county_mort_pntr_rates <- county_mort_pntr %>%
 
 
 age_xwalk <- read.csv("C:/Users/tangjy/Documents/xwalks/age_xwalk.csv") %>%
-  rename(age_bracket = ï..age_bracket)
+  rename(age_bracket = Ã¯..age_bracket)
 
 aged_dod_deaths_melt <- melt(county_mort_pntr_rates,
                              id.vars = c(
@@ -1248,7 +1248,7 @@ aged_county_pop_melt <- melt(county_mort_pntr_rates,
 
 
 age_dist <- read.csv("C:/Users/tangjy/Documents/xwalks/age_dist.csv") %>%
-  rename(age_bracket = ï..â..All.AgesÂ.,
+  rename(age_bracket = Ã¯..Ã¢..All.AgesÃ‚.,
          us_age_per_mm = age_per_mm_2) %>%
   select(age_bracket, us_age_per_mm) %>%
   filter(age_bracket != "total")
@@ -1325,7 +1325,7 @@ county_mort_tw_rates <- county_mort_tw %>%
 
 
 age_xwalk <- read.csv("C:/Users/tangjy/Documents/xwalks/age_xwalk.csv") %>%
-  rename(age_bracket = ï..age_bracket)
+  rename(age_bracket = Ã¯..age_bracket)
 
 aged_dod_deaths_melt <- melt(county_mort_tw_rates,
                              id.vars = c(
@@ -1507,7 +1507,7 @@ aged_county_pop_melt <- melt(county_mort_tw_rates,
 
 
 age_dist <- read.csv("C:/Users/tangjy/Documents/xwalks/age_dist.csv") %>%
-  rename(age_bracket = ï..â..All.AgesÂ.,
+  rename(age_bracket = Ã¯..Ã¢..All.AgesÃ‚.,
          us_age_per_mm = age_per_mm_2) %>%
   select(age_bracket, us_age_per_mm) %>%
   filter(age_bracket != "total")
