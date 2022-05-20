@@ -9,7 +9,7 @@ library(reshape2)
 setwd("~")
 setwd("C:/Users/tangjy/Documents/interim")
 
-# Dummy coding demographic X death categories by column
+# Dummy coding --> aggregating demographic X death categories by column - 1990-1995
 death_agg_90_95 <- function(mort_year){
   county_mort <- mort_year %>%
     mutate(year = 1900 + data_year,
@@ -133,44 +133,8 @@ death_agg_90_95 <- function(mort_year){
   assign(mort_year_name, county_mort, env=.GlobalEnv)
 }
 
-unzip("mort_1990.zip")
-mort_1990 <- read.csv("mort_1990.csv")
-death_agg_90_95(mort_1990)
-rm(mort_1990)
-gc()
 
-unzip("mort_1991.zip")
-mort_1991 <- read.csv("mort_1991.csv")
-death_agg_90_95(mort_1991)
-rm(mort_1991)
-gc()
-
-unzip("mort_1992.zip")
-mort_1992 <- read.csv("mort_1992.csv")
-death_agg_90_95(mort_1992)
-rm(mort_1992)
-gc()
-
-unzip("mort_1993.zip")
-mort_1993 <- read.csv("mort_1993.csv")
-death_agg_90_95(mort_1993)
-rm(mort_1993)
-gc()
-
-unzip("mort_1994.zip")
-mort_1994 <- read.csv("mort_1994.csv")
-death_agg_90_95(mort_1994)
-rm(mort_1994)
-gc()
-
-unzip("mort_1995.zip")
-mort_1995 <- read.csv("mort_1995.csv")
-death_agg_90_95(mort_1995)
-rm(mort_1995)
-gc()
-
-
-
+# Dummy coding --> aggregating demographic X death categories by column - 1996-1998
 death_agg_96_98 <- function(mort_year){
   county_mort <- mort_year %>%
     mutate(year = data_year,
@@ -295,24 +259,59 @@ death_agg_96_98 <- function(mort_year){
 }
 
 
-unzip("mort_1996.zip")
+# unzip("mort_1990.zip")
+mort_1990 <- read.csv("mort_1990.csv")
+death_agg_90_95(mort_1990)
+rm(mort_1990)
+gc()
+
+# unzip("mort_1991.zip")
+mort_1991 <- read.csv("mort_1991.csv")
+death_agg_90_95(mort_1991)
+rm(mort_1991)
+gc()
+
+# unzip("mort_1992.zip")
+mort_1992 <- read.csv("mort_1992.csv")
+death_agg_90_95(mort_1992)
+rm(mort_1992)
+gc()
+
+# unzip("mort_1993.zip")
+mort_1993 <- read.csv("mort_1993.csv")
+death_agg_90_95(mort_1993)
+rm(mort_1993)
+gc()
+
+# unzip("mort_1994.zip")
+mort_1994 <- read.csv("mort_1994.csv")
+death_agg_90_95(mort_1994)
+rm(mort_1994)
+gc()
+
+# unzip("mort_1995.zip")
+mort_1995 <- read.csv("mort_1995.csv")
+death_agg_90_95(mort_1995)
+rm(mort_1995)
+gc()
+
+#unzip("mort_1996.zip")
 mort_1996 <- read.csv("mort_1996.csv")
 death_agg_96_98(mort_1996)
 rm(mort_1996)
 gc()
 
-unzip("mort_1997.zip")
+#unzip("mort_1997.zip")
 mort_1997 <- read.csv("mort_1997.csv")
 death_agg_96_98(mort_1997)
 rm(mort_1997)
 gc()
 
-unzip("mort_1998.zip")
+#unzip("mort_1998.zip")
 mort_1998 <- read.csv("mort_1998.csv")
 death_agg_96_98(mort_1998)
 rm(mort_1998)
 gc()
-
 
 
 county_mort_90_98 <- bind_rows(
@@ -331,8 +330,7 @@ write.csv(county_mort_90_98, "C:/Users/tangjy/Documents/interim/county_mort_90_9
 
 
 
-
-
+# Dummy coding --> aggregating demographic X death categories by column - 1999-2002
 death_agg_99_02 <- function(mort_year){
   county_mort <- mort_year %>%
     mutate(year = data_year,
@@ -456,38 +454,11 @@ death_agg_99_02 <- function(mort_year){
   assign(mort_year_name, county_mort, env=.GlobalEnv)
 }
 
-unzip("mort_1999.zip")
-mort_1999 <- read.csv("mort_1999.csv")
-death_agg_99_02(mort_1999)
-rm(mort_1999)
-gc()
 
-unzip("mort_2000.zip")
-mort_2000 <- read.csv("mort_2000.csv")
-death_agg_99_02(mort_2000)
-rm(mort_2000)
-gc()
-
-unzip("mort_2001.zip")
-mort_2001 <- read.csv("mort_2001.csv")
-death_agg_99_02(mort_2001)
-rm(mort_2001)
-gc()
-
-unzip("mort_2002.zip")
-mort_2002 <- read.csv("mort_2002.csv")
-death_agg_99_02(mort_2002)
-rm(mort_2002)
-gc()
-
-
-
-
-
-
-
+# Mortality files for 03-onward do not have fips codes - need to convert
 state_fips_xwalk <- read.csv("C:/Users/tangjy/Documents/xwalks/state_fips_xwalk.csv")
 
+# Dummy coding --> aggregating demographic X death categories by column - 2003-2004
 death_agg_03_04 <- function(mort_year){
   county_mort <- mort_year %>%
     left_join(state_fips_xwalk, by=c("residence_state"="state_abbrev")) %>%
@@ -604,13 +575,37 @@ death_agg_03_04 <- function(mort_year){
 }
 
 
-unzip("mort_2003.zip")
+#unzip("mort_1999.zip")
+mort_1999 <- read.csv("mort_1999.csv")
+death_agg_99_02(mort_1999)
+rm(mort_1999)
+gc()
+
+#unzip("mort_2000.zip")
+mort_2000 <- read.csv("mort_2000.csv")
+death_agg_99_02(mort_2000)
+rm(mort_2000)
+gc()
+
+#unzip("mort_2001.zip")
+mort_2001 <- read.csv("mort_2001.csv")
+death_agg_99_02(mort_2001)
+rm(mort_2001)
+gc()
+
+#unzip("mort_2002.zip")
+mort_2002 <- read.csv("mort_2002.csv")
+death_agg_99_02(mort_2002)
+rm(mort_2002)
+gc()
+
+#unzip("mort_2003.zip")
 mort_2003 <- read.csv("mort_2003.csv")
 death_agg_03_04(mort_2003)
 rm(mort_2003)
 gc()
 
-unzip("mort_2004.zip")
+#unzip("mort_2004.zip")
 mort_2004 <- read.csv("mort_2004.csv")
 death_agg_03_04(mort_2004)
 rm(mort_2004)
@@ -629,8 +624,7 @@ write.csv(county_mort_99_04, "C:/Users/tangjy/Documents/interim/county_mort_99_0
 
 
 
-
-
+# Dummy coding --> aggregating demographic X death categories by column - 2005-2012
 death_agg_05_12 <- function(mort_year){
   county_mort <- mort_year %>%
     left_join(state_fips_xwalk, by=c("state_residence"="state_abbrev")) %>%
@@ -746,49 +740,49 @@ death_agg_05_12 <- function(mort_year){
   assign(mort_year_name, county_mort, env=.GlobalEnv)
 }
 
-unzip("mort_2005.zip")
+#unzip("mort_2005.zip")
 mort_2005 <- read.csv("mort_2005.csv")
 death_agg_05_12(mort_2005)
 rm(mort_2005)
 gc()
 
-unzip("mort_2006.zip")
+#unzip("mort_2006.zip")
 mort_2006 <- read.csv("mort_2006.csv")
 death_agg_05_12(mort_2006)
 rm(mort_2006)
 gc()
 
-unzip("mort_2007.zip")
+#unzip("mort_2007.zip")
 mort_2007 <- read.csv("mort_2007.csv")
 death_agg_05_12(mort_2007)
 rm(mort_2007)
 gc()
 
-unzip("mort_2008.zip")
+#unzip("mort_2008.zip")
 mort_2008 <- read.csv("mort_2008.csv")
 death_agg_05_12(mort_2008)
 rm(mort_2008)
 gc()
 
-unzip("mort_2009.zip")
+#unzip("mort_2009.zip")
 mort_2009 <- read.csv("mort_2009.csv")
 death_agg_05_12(mort_2009)
 rm(mort_2009)
 gc()
 
-unzip("mort_2010.zip")
+#unzip("mort_2010.zip")
 mort_2010 <- read.csv("mort_2010.csv")
 death_agg_05_12(mort_2010)
 rm(mort_2010)
 gc()
 
-unzip("mort_2011.zip")
+#unzip("mort_2011.zip")
 mort_2011 <- read.csv("mort_2011.csv")
 death_agg_05_12(mort_2011)
 rm(mort_2011)
 gc()
 
-unzip("mort_2012.zip")
+#unzip("mort_2012.zip")
 mort_2012 <- read.csv("mort_2012.csv")
 death_agg_05_12(mort_2012)
 rm(mort_2012)
@@ -810,9 +804,7 @@ write.csv(county_mort_05_12, "C:/Users/tangjy/Documents/interim/county_mort_05_1
 
 
 
-
-
-
+# Dummy coding --> aggregating demographic X death categories by column - 2013-2019
 death_agg_13_19 <- function(mort_year){
   county_mort <- mort_year %>%
     left_join(state_fips_xwalk, by=c("state_residence"="state_abbrev")) %>%
@@ -930,44 +922,44 @@ death_agg_13_19 <- function(mort_year){
 
 
 
-unzip("mort_2013.zip")
+#unzip("mort_2013.zip")
 mort_2013 <- read.csv("mort_2013.csv")
 death_agg_13_19(mort_2013)
 rm(mort_2013)
 gc()
 
-unzip("mort_2014.zip")
+#unzip("mort_2014.zip")
 mort_2014 <- read.csv("mort_2014.csv")
 death_agg_13_19(mort_2014)
 rm(mort_2014)
 gc()
 
-unzip("mort_2015.zip")
+#unzip("mort_2015.zip")
 mort_2015 <- read.csv("mort_2015.csv")
 death_agg_13_19(mort_2015)
 rm(mort_2015)
 gc()
 
 
-unzip("mort_2016.zip")
+#unzip("mort_2016.zip")
 mort_2016 <- read.csv("mort_2016.csv")
 death_agg_13_19(mort_2016)
 rm(mort_2016)
 gc()
 
-unzip("mort_2017.zip")
+#unzip("mort_2017.zip")
 mort_2017 <- read.csv("mort_2017.csv")
 death_agg_13_19(mort_2017)
 rm(mort_2017)
 gc()
 
-unzip("mort_2018.zip")
+#unzip("mort_2018.zip")
 mort_2018 <- read.csv("mort_2018.csv")
 death_agg_13_19(mort_2018)
 rm(mort_2018)
 gc()
 
-unzip("mort_2019.zip")
+#unzip("mort_2019.zip")
 mort_2019 <- read.csv("mort_2019.csv")
 death_agg_13_19(mort_2019)
 rm(mort_2019)
