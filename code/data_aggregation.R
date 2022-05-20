@@ -975,6 +975,7 @@ county_mort_tw <- bind_rows(
   county_mort_2019
 )
 
+# Complete demographic X death count dataset for the trade war
 write.csv(county_mort_tw, "C:/Users/tangjy/Documents/interim/county_mort_tw.csv", row.names = F)
 
 county_mort_90_98 <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_90_98.csv")
@@ -1002,14 +1003,14 @@ write.csv(county_mort_pntr, "C:/Users/tangjy/Documents/interim/county_mort_pntr.
 
 
 
-----------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------
 # Age Adjusted Death Rates
 # ----------------------------------------------------------------------------------------------------
 # Calculate age adjusted death rates using the 2000 US standard million population for 18 age groups
 
-
 # county_mort_pntr <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_pntr.csv")
 
+# County level population counts necessary for calculating age-adjusted death rates
 county_pop_90_12 <- read.csv("C:/Users/tangjy/Documents/interim/county_pop_1990_2019.csv") %>%
   filter(year <= 2012) %>%
   select(
@@ -1036,35 +1037,11 @@ county_pop_90_12 <- read.csv("C:/Users/tangjy/Documents/interim/county_pop_1990_
     age_85_plus_pop,
     )
   
-
+# Join population counts to death rates by deaths X demographic groups
 county_mort_pntr_rates <- county_mort_pntr %>%
   left_join(county_pop_90_12) %>%
   filter(fipscounty != 0) 
 
-#%>%
-  #mutate(
-    #crude_total_rate = (total_deaths/total_pop)*100,
-    #crude_dod_rate = (dod_death/total_pop)*100,
-    #crude_suicide_rate = (suicide_deaths/total_pop)*100,
-    #crude_drug_od_rate = (drug_od_deaths/total_pop)*100, 
-    #crude_arld_rate = (arld_death/total_pop)*100,
-  #)
-
-
-#agg_deaths_melt <- melt(county_mort_pntr_rates,
-#                        id.vars = c(
-#                          "fipscounty", 
-#                          "year"
-#                        ), 
-#                        measure.vars = c(
-#                          "total_deaths", 
-#                          "dod_deaths",
-#                          "suicide_deaths",
-#                          "drug_od_deaths",
-#                          "arld_deaths"
-#                          )
-#                        ) %>%
-#  arrange(fipscounty, year)
 
 
 age_xwalk <- read.csv("C:/Users/tangjy/Documents/xwalks/age_xwalk.csv") %>%
