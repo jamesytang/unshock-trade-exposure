@@ -940,7 +940,6 @@ death_agg_13_19(mort_2015)
 rm(mort_2015)
 gc()
 
-
 #unzip("mort_2016.zip")
 mort_2016 <- read.csv("mort_2016.csv")
 death_agg_13_19(mort_2016)
@@ -982,6 +981,7 @@ county_mort_90_98 <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_90_
 county_mort_99_04 <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_99_04.csv")
 county_mort_05_12 <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_05_12.csv")
 
+# Complete demographic X death count dataset for PNTR
 county_mort_pntr <- bind_rows(
   county_mort_90_98,
   county_mort_99_04,
@@ -994,6 +994,7 @@ rm(
   county_mort_05_12
 )
 
+# Save to interim 
 write.csv(county_mort_pntr, "C:/Users/tangjy/Documents/interim/county_mort_pntr.csv", row.names = F)
 
 
@@ -1001,13 +1002,13 @@ write.csv(county_mort_pntr, "C:/Users/tangjy/Documents/interim/county_mort_pntr.
 
 
 
-
-
-
+----------------------------------------------------------------------------------------------------
 # Age Adjusted Death Rates
 # ----------------------------------------------------------------------------------------------------
+# Calculate age adjusted death rates using the 2000 US standard million population for 18 age groups
 
-county_mort_pntr <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_pntr.csv")
+
+# county_mort_pntr <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_pntr.csv")
 
 county_pop_90_12 <- read.csv("C:/Users/tangjy/Documents/interim/county_pop_1990_2019.csv") %>%
   filter(year <= 2012) %>%
