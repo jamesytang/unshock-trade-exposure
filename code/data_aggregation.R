@@ -9,6 +9,7 @@ library(reshape2)
 setwd("~")
 setwd("C:/Users/tangjy/Documents/interim")
 
+# Dummy coding demographic X death categories by column
 death_agg_90_95 <- function(mort_year){
   county_mort <- mort_year %>%
     mutate(year = 1900 + data_year,
