@@ -1001,8 +1001,6 @@ write.csv(county_mort_pntr, "C:/Users/tangjy/Documents/interim/county_mort_pntr.
 
 
 
-
-
 # ----------------------------------------------------------------------------------------------------
 # Age Adjusted Death Rates
 # ----------------------------------------------------------------------------------------------------
@@ -1042,11 +1040,11 @@ county_mort_pntr_rates <- county_mort_pntr %>%
   left_join(county_pop_90_12) %>%
   filter(fipscounty != 0) 
 
-
-
+# Xwalk for helping reshape data 
 age_xwalk <- read.csv("C:/Users/tangjy/Documents/xwalks/age_xwalk.csv") %>%
   rename(age_bracket = ï..age_bracket)
 
+# Reshape data - send merge like row entries into column counts - total deaths of despair
 aged_dod_deaths_melt <- melt(county_mort_pntr_rates,
                              id.vars = c(
                                "fipscounty", 
@@ -1082,6 +1080,7 @@ aged_dod_deaths_melt <- melt(county_mort_pntr_rates,
   select(-c(age_suicide, age_drug_od, age_arld, age_pop))
 
 
+# Reshape data - send merge like row entries into column counts - suicide deaths
 aged_suicide_deaths_melt <- melt(county_mort_pntr_rates,
                                  id.vars = c(
                                    "fipscounty", 
@@ -1116,7 +1115,7 @@ aged_suicide_deaths_melt <- melt(county_mort_pntr_rates,
   left_join(age_xwalk) %>%
   select(-c(age_dod, age_drug_od, age_arld, age_pop))
 
-
+# Reshape data - send merge like row entries into column counts - drug overdose deaths
 aged_drug_od_deaths_melt <- melt(county_mort_pntr_rates,
                                  id.vars = c(
                                    "fipscounty", 
@@ -1151,6 +1150,8 @@ aged_drug_od_deaths_melt <- melt(county_mort_pntr_rates,
   left_join(age_xwalk) %>%
   select(-c(age_dod, age_suicide, age_arld, age_pop))
 
+
+# Reshape data - send merge like row entries into column counts - alcohol related liver disease deaths
 aged_arld_deaths_melt <- melt(county_mort_pntr_rates,
                               id.vars = c(
                                 "fipscounty", 
@@ -1186,6 +1187,7 @@ aged_arld_deaths_melt <- melt(county_mort_pntr_rates,
   select(-c(age_dod, age_suicide, age_drug_od, age_pop))
 
 
+# Reshape data - send merge like row entries into column counts - population counts
 aged_county_pop_melt <- melt(county_mort_pntr_rates,
                              id.vars = c(
                                "fipscounty", 
@@ -1220,14 +1222,15 @@ aged_county_pop_melt <- melt(county_mort_pntr_rates,
   left_join(age_xwalk) %>%
   select(-c(age_dod, age_suicide, age_drug_od, age_arld))
 
-
+# 2000 US standard million population for 18 age groups
 age_dist <- read.csv("C:/Users/tangjy/Documents/xwalks/age_dist.csv") %>%
   rename(age_bracket = ï..â..All.AgesÂ.,
          us_age_per_mm = age_per_mm_2) %>%
   select(age_bracket, us_age_per_mm) %>%
   filter(age_bracket != "total")
 
-
+# Join all reshaped death type dataframes 
+# Calculate age-adjusted death rates using standard formula - see https://www.health.ny.gov/diseases/chronic/ageadj.htm for details
 age_adjusted_deaths_pntr <- aged_county_pop_melt %>%
   relocate(age_bracket, .after = year) %>%
   left_join(aged_dod_deaths_melt, by=c("fipscounty"="fipscounty", "year"="year", "age_bracket"="age_bracket")) %>%
@@ -1257,14 +1260,16 @@ age_adjusted_deaths_pntr <- aged_county_pop_melt %>%
   )
 
 
+# Finalized age adjusted deaths for PNTR 
 write.csv(age_adjusted_deaths_pntr, "C:/Users/tangjy/Documents/final_datasets/age_adjusted_deaths_pntr.csv", row.names = F)
 
 rm(list=ls())
 
 
 # -------------------------------------------------------------------------------------
+# Repeat for trade war years - 2013-2019
 
-county_mort_tw <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_tw.csv")
+# county_mort_tw <- read.csv("C:/Users/tangjy/Documents/interim/county_mort_tw.csv")
 
 county_pop_13_19 <- read.csv("C:/Users/tangjy/Documents/interim/county_pop_1990_2019.csv") %>%
   filter(year > 2012) %>%
@@ -1525,6 +1530,7 @@ rm(list=ls())
 
 
 
-
+# END file
+---------------------------------------------------------------------------------------------------------
 
 
