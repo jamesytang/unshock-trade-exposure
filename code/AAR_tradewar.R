@@ -15,7 +15,7 @@
 #    - FIPS code county name xwalk 
 
 
-# Libraries -----------------------
+# Libraries 
 library(tidyverse)
 library(dplyr)
 library(haven)
@@ -24,13 +24,15 @@ library(naniar)
 library(ggplot2)
 library(data.table)
 library(R.utils)
-# ---------------------------------
+
 
 
 rm(list=ls()) 
 
 
-# Data Prep -------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------
+
+# Data Prep 
 # Loading in data
 # Fama French 49 industry returns (daily)
 industry_returns_49 <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/CRSP/industry_return_49.csv')
@@ -43,8 +45,9 @@ market_return_daily <- transform(market_return_daily, date = as.Date(as.characte
 market_return_daily$date_id <- NULL
 
 
+# --------------------------------------------------------------------------------------------------------------------------------
 
-# Calculate Industry Abnormal Returns -----------------------------------
+# Calculate Industry Abnormal Returns 
 # Estimating alpha and beta
 combined_returns <- as.data.frame(cbind(industry_returns_49, market_return_daily))
 combined_returns[combined_returns == -99.99] <- NA
@@ -122,13 +125,6 @@ abnormal_returns_war_windows <- abnormal_returns %>%
   select(-date_id) 
 
 
-test <- abnormal_returns %>%
-  mutate(five_day_index = 1:nrow(abnormal_returns) %/% 5) %>%
-  group_by(five_day_index) %>%
-  summarise_all(mean)
-
-
-
 # Separate scores per event
 abnormal_returns_war_windows1 <- abnormal_returns %>% 
   filter(date_id >= '2018-02-27' & date_id <= '2018-03-05') %>% 
@@ -160,8 +156,7 @@ abnormal_returns_war_windows7 <- abnormal_returns %>%
 
 
 
-
-# Combine and finalize AAR industry dataset -----------------------------------------------------------------
+# Combine and finalize AAR industry dataset 
 abnormal_returns_ev_avg <- data.frame(cbind(colnames(abnormal_returns_war_windows), 
                                             colMeans(abnormal_returns_war_windows)))
 colnames(abnormal_returns_ev_avg) <- c('industry', 'abnormal_returns_ev_avg')
@@ -222,7 +217,7 @@ AAR_tradewar_industry <- abnormal_returns_ev_avg %>%
 
 
 # **** Output file to csv **** 
-write.csv(AAR_tradewar_industry, "/Users/tangj18/Documents/Honors Research /interim_data/AAR_tradewar_industry.csv", row.names = F)
+write.csv(AAR_tradewar_industry, "/Users/tangj18/Documents/Honors Research /final_datasets/AAR_tradewar_industry.csv", row.names = F)
 
 
 # Remove unnecessary dfs
@@ -244,30 +239,30 @@ rm(abnormal_returns,
    j)
 
 
+# --------------------------------------------------------------------------------------------------------------------------------
 
-# Aggregating AAR industry scores to the county level ------------------------------------
-# Loading in data ---------------
+# Aggregating AAR industry scores to the county level 
+# Loading in data 
 cbp_13 <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/county_business_patterns/efsy_cbp_2013.csv')
 cbp_13$avg_emp <- cbp_13$lb
 cbp_13$lb <- NULL
 cbp_13$ub <- NULL
 
-fips_county_xwalk <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/xwalks/fips_county2014.csv')
+fips_county_xwalk <- read_csv('/Users/tangj18/Documents/Honors Research /xwalks/fips_county2014.csv')
 
-naics_2012_2017 <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/xwalks/2012_to_2017_NAICS.csv')
+naics_2012_2017 <- read_csv('/Users/tangj18/Documents/Honors Research /xwalks/2012_to_2017_NAICS.csv')
 naics_2012_2017$X5 <- NULL
 naics_2012_2017$X6 <- NULL
 naics_2012_2017$X7 <- NULL
 naics_2012_2017$X8 <- NULL
 naics_2012_2017$X9 <- NULL
 
-sic_naics_xwalk_2017 <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/xwalks/sic_naics_xwalk_2017_2022.csv')
+sic_naics_xwalk_2017 <- read_csv('/Users/tangj18/Documents/Honors Research /xwalks/sic_naics_xwalk_2017_2022.csv')
 
 sic_naics_xwalk_2017 <- sic_naics_xwalk_2017[!duplicated(sic_naics_xwalk_2017), ]
 
-sic_ffindustry_xwalk <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/xwalks/SIC_to_Fama_French_industry.csv')
+sic_ffindustry_xwalk <- read_csv('/Users/tangj18/Documents/Honors Research /xwalks/SIC_to_Fama_French_industry.csv')
 sic_ffindustry_xwalk$SIC0 <- NULL
-# ------------------------------------------
 
 
 # Code conversion CBP --> Fama French Industries
@@ -320,7 +315,7 @@ county_industry_emp <- county_industry_emp %>%
   left_join(county_total_emp)
 county_industry_emp$FF_48[is.na(county_industry_emp$FF_48)] <- 49
 
-write.csv(county_industry_emp, "/Users/tangj18/Documents/Honors Research /interim_data/county_industry_emp.csv", row.names = F)
+write.csv(county_industry_emp, "/Users/tangj18/Documents/Honors Research /interim/county_industry_emp.csv", row.names = F)
 
 
 county_AAR <- county_industry_emp %>%
@@ -348,7 +343,7 @@ AAR_tradewar_county <- county_AAR
 
 
 # **** Output file to csv **** 
-write.csv(AAR_tradewar_county, "/Users/tangj18/Documents/Honors Research /interim_data/AAR_tradewar_county.csv", row.names = F)
+write.csv(AAR_tradewar_county, "/Users/tangj18/Documents/Honors Research /final_datasets/AAR_tradewar_county.csv", row.names = F)
 
 
 # Remove unnecessary dfs
