@@ -13,7 +13,7 @@
 #    - FIPS code county name xwalk 
 
 
-# Libraries -----------------------
+# Libraries 
 library(tidyverse)
 library(dplyr)
 library(haven)
@@ -22,13 +22,14 @@ library(naniar)
 library(ggplot2)
 library(data.table)
 library(R.utils)
-# ---------------------------------
 
 
 rm(list=ls()) 
 
 
-# Data prep -------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------
+
+# Data prep 
 # Load in daily industry returns data
 industry_returns_49 <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/CRSP/industry_return_49.csv')
 names(industry_returns_49)[1] <- "date_id"
@@ -44,10 +45,10 @@ combined_returns <- as.data.frame(cbind(industry_returns_49, market_return_daily
 combined_returns[combined_returns == -99.99] <- NA
 combined_returns_1999 <- subset(combined_returns, date > '1998-12-31' & date < '2000-01-01')
 
-# -----------------------------------------
 
+# --------------------------------------------------------------------------------------------------------------------------------
 
-# Calculate industry abnormal returns ---------------------------------------------------------------------------
+# Calculate industry abnormal returns 
 # Initialize empty vectors for alpha and beta
 alpha <- vector()
 beta <- vector()
@@ -106,16 +107,15 @@ abnormal_returns_pntr_windows <- abnormal_returns %>%
   select(-date_id) 
 
 
-# Combine and finalize AAR industry dataset -----------------------------------------------------------------
+# Combine and finalize AAR industry dataset 
 abnormal_returns_ev_avg <- data.frame(cbind(colnames(abnormal_returns_pntr_windows), 
                                             colMeans(abnormal_returns_pntr_windows)))
 colnames(abnormal_returns_ev_avg) <- c('industry', 'abnormal_returns_ev_avg')
 abnormal_returns_ev_avg$FF_48 <- 1:nrow(abnormal_returns_ev_avg)
 AAR_pntr_industry <- abnormal_returns_ev_avg
 
-
-# **** Output file to csv **** 
-write.csv(AAR_pntr_industry, "/Users/tangj18/Documents/Honors Research /interim_data/AAR_pntr_industry.csv", row.names = F)
+# AAR scores by fama french 49 industries 
+write.csv(AAR_pntr_industry, "/Users/tangj18/Documents/Honors Research /final_datasets/AAR_pntr_industry.csv", row.names = F)
 
 
 # Remove unnecessary dfs
@@ -137,24 +137,23 @@ rm(abnormal_returns,
    j)
 
 
+# --------------------------------------------------------------------------------------------------------------------------------
 
-
-# Aggregating AAR industry scores to the county level ------------------------------------
-# Loading in data --------------------------
-cbp_dorn <- read_dta('/Users/tangj18/Documents/Honors Research /downloaded_data/Extra Data/Pierce_schott/AERI2018-0396_data/20180396_input/CBP_1990adj_dorn.dta')
+# Aggregating AAR industry scores to the county level using county industry employment composition
+# Loading in data 
+cbp_dorn <- read_dta('/Users/tangj18/Documents/Honors Research /downloaded_data/Pierce_schott/CBP_1990adj_dorn.dta')
 cbp_dorn <- cbp_dorn[complete.cases(cbp_dorn$code4), ]
 cbp_dorn_90 <- cbp_dorn %>% 
   mutate(sic = code4) %>%
   mutate(fipscounty = countyid) %>%
   select(fipscounty, sic, imp_emp)
 
-sic_ffindustry_xwalk <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/xwalks/SIC_to_Fama_French_industry.csv')
+sic_ffindustry_xwalk <- read_csv('/Users/tangj18/Documents/Honors Research /xwalks/SIC_to_Fama_French_industry.csv')
 sic_ffindustry_xwalk$SIC0 <- NULL
 
-fips_county_xwalk <- read_csv('/Users/tangj18/Documents/Honors Research /downloaded_data/xwalks/fips_county1990.csv')
+fips_county_xwalk <- read_csv('/Users/tangj18/Documents/Honors Research /xwalks/fips_county1990.csv')
 fips_county_xwalk  <- fips_county_xwalk %>%
   filter(str_sub(fips,-3,-1)!="000")
-# ------------------------------------------
 
 
 # Code conversion CBP --> Fama French Industries 
@@ -192,8 +191,8 @@ AAR_county_1990 <- county_industry_emp %>%
 AAR_pntr_county <- AAR_county_1990
 
 
-# **** Output file to csv **** 
-write.csv(AAR_pntr_county, "/Users/tangj18/Documents/Honors Research /interim_data/AAR_pntr_county.csv", row.names = F)
+# AAR scores by county
+write.csv(AAR_pntr_county, "/Users/tangj18/Documents/Honors Research /final_datasets/AAR_pntr_county.csv", row.names = F)
 
 
 # Remove unnecessary dfs
