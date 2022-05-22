@@ -19,14 +19,24 @@ This paper examines the effect of protectionist trade policy, namely the 2018 tr
 
 # Replication Instructions 
 - Note: These instructions are not exact and will require some debugging/understanding of R filepaths, etc. 
-1. Run "external_datasets.R" 
+1. Create/download folders "interim", "final_datasets", "xwalks", "downloaded_data", "MCD_files" with appropriate sub-folders
 2. Unzip any zipped files and download linked files into specified folders
-3. Run R file "AAR_pntr.R"
-4. Run R file "AAR_tradewar.R" 
-5. Run R file "AAR_pntr_prep.R" 
-6. Run R file "AAR_pntr_viz.R"
-7. Run R file "AAR_tradewar_viz.R" 
-
+3. Edit filepaths to your personal device 
+4. Run R file "external_datasets.R" 
+5. Run R file "AAR_pntr.R"
+6. Run R file "AAR_tradewar.R" 
+7. Run R file "AAR_pntr_prep.R" 
+8. Run R file "AAR_pntr_viz.R"
+9. Run R file "AAR_tradewar_viz.R" 
+10. Run R file "reg_pntr_labormkt.R"
+11. Run R file "ushock_labormkt.R"
+12. Follow data application instructions from https://www.cdc.gov/nchs/nvss/nvss-restricted-data.htm#anchor_1553801979 to receive restricted-use death files
+13. Save restricted use MCD .txt files to "MCD_files" folder
+14. Rename raw MCD files to "MULTyearUS.AllCnty.txt"
+  - ex. For the year 2000, the file name is "MULT2000US.AllCnty.txt" 
+  - Different years have different naming conventions
+15. Run R file "data_upload_format.R" 
+  - Reformatted MCD files are saved to "interim" folder as "mort_year.csv" (ex. for 2000, the file will appear as "mort_2000.csv")
 
 
 
@@ -34,15 +44,8 @@ This paper examines the effect of protectionist trade policy, namely the 2018 tr
 Instructions for creating age-adjusted death rates 
 Individual level cause of death data available from NCHS via application
 
-1. Follow data application instructions from https://www.cdc.gov/nchs/nvss/nvss-restricted-data.htm#anchor_1553801979 to receive restricted-use death files
-  - Set up virtual machine or other secured device to receive data 
-2. Create folders called "MCD_files", "interim", and "final_datasets" 
-3. Save MCD .txt files to "MCD_files" folder
-4. Rename raw multiple cause of death files to "MULTyearUS.AllCnty.txt"
-  - ex. For the year 2000, the file name is "MULT2000US.AllCnty.txt" 
-  - Different years have different naming conventions
-5. Run r file "data_upload_format.R" 
-  - Reformatted MCD files are saved to "interim" folder as "mort_year.csv" (ex. for 2000, the file will appear as "mort_2000.csv" 
+
+
 7. I recommend zipping these mort_year files to save space 
 8. Run r file "data_aggregation.R"
 9. Completed county-level age-adjusted death rates for the trade war and PNTR are separately found in the "final_datasets" folder
