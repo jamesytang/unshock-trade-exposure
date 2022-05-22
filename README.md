@@ -18,7 +18,7 @@ This paper examines the effect of protectionist trade policy, namely the 2018 tr
 
 
 # Replication Instructions 
-- Note: These instructions are not exact and will require some debugging/understanding of R filepaths, etc. 
+Note: These instructions are not exact and will require some debugging/understanding of R filepaths, etc. 
 1. Create/download folders "interim", "final_datasets", "xwalks", "downloaded_data", "MCD_files" with appropriate sub-folders
 2. Unzip any zipped files and download linked files into specified folders
 3. Edit filepaths to your personal device 
@@ -35,17 +35,11 @@ This paper examines the effect of protectionist trade policy, namely the 2018 tr
 14. Rename raw MCD files to "MULTyearUS.AllCnty.txt"
   - ex. For the year 2000, the file name is "MULT2000US.AllCnty.txt" 
   - Different years have different naming conventions
-15. Run R file "data_upload_format.R" 
+15. Run R file "death_data_upload_format.R" 
   - Reformatted MCD files are saved to "interim" folder as "mort_year.csv" (ex. for 2000, the file will appear as "mort_2000.csv")
+  - I recommend zipping these mort_year files to save space 
+16. Run R file "death_data_aggregation.R"
+17. Run R file "reg_pntr_deaths.R"
 
 
 
-
-Instructions for creating age-adjusted death rates 
-Individual level cause of death data available from NCHS via application
-
-
-
-7. I recommend zipping these mort_year files to save space 
-8. Run r file "data_aggregation.R"
-9. Completed county-level age-adjusted death rates for the trade war and PNTR are separately found in the "final_datasets" folder
