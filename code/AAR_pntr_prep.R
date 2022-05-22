@@ -29,7 +29,7 @@ AAR_pntr_county_edit <- AAR_pntr_county %>%
   mutate(bottom_quartile = as.factor(ifelse(quartile==1, 1, 0)),
          upper_quartile = as.factor(ifelse(quartile==4, 1, 0)))
 
-write.csv(AAR_pntr_county_edit, "/Users/tangj18/Documents/Honors Research /interim/AAR_pntr_county_edit", row.names = F)
+write.csv(AAR_pntr_county_edit, "/Users/tangj18/Documents/Honors Research /interim/AAR_pntr_county_edit.csv", row.names = F)
 
 
 # AAR PNTR Estimates for unemployment
