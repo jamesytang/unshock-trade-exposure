@@ -1,7 +1,6 @@
-# unshock-trade-exposure
 Code, data, and instructions to reproduce undergraduate honor's thesis
 
-Thesis Title: "Unshocking a shock - using stock market reactions to measure labor market outcomes from variations in trade exposure" 
+# "Unshocking a shock - using stock market reactions to measure labor market outcomes from variations in trade exposure" 
 Author: James Tang  
 Advisor: Brian Beach  
 
